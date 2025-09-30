@@ -30,6 +30,26 @@ Service widgets are used to display the status of a service, often a web service
 
 More detail on configuring service widgets can be found in the [Service Widgets Config](../configs/services.md) section.
 
+### Highlight Rules
+
+Service widgets support **highlight rules** to visually emphasize fields based on conditions. These rules are defined per widget in your `services.yaml` file under `highlightRules`.
+
+```yaml
+- Prometheus:
+    icon: prometheus.svg
+    widget:
+      type: prometheus
+      url: http://prometheushost:port
+      highlightRules:
+        - field: targets_down
+          fieldValue: 0
+          fieldType: int
+          operator: greaterThan
+          color: red-500
+```
+
+More detail on configuring highlight rules for service widgets can be found in the [Widget Highlight Rules](http://localhost:8000/configs/services/#widget-highlight-rules) section.
+
 ## Info Widgets
 
 Info widgets are used to display information in the header, often about your system or environment. Info widgets are defined in your `widgets.yaml` file. Here's an example:

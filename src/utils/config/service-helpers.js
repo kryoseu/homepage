@@ -247,6 +247,7 @@ export function cleanServiceGroups(groups) {
         cleanedService.widgets.push(cleanedService.widget);
         delete cleanedService.widget;
       }
+
       cleanedService.widgets = cleanedService.widgets.map((widgetData, index) => {
         // whitelisted set of keys to pass to the frontend
         // alphabetical, grouped by widget(s)
@@ -255,6 +256,7 @@ export function cleanServiceGroups(groups) {
           fields,
           hideErrors,
           type,
+          highlightRules,
 
           // azuredevops
           repositoryId,
@@ -435,6 +437,7 @@ export function cleanServiceGroups(groups) {
         const widget = {
           type,
           fields: fieldsList || null,
+          highlight_rules: highlightRules || null,
           hide_errors: hideErrors || false,
           service_name: service.name,
           service_group: serviceGroup.name,

@@ -1,5 +1,6 @@
-import { useContext } from "react";
+import { createContext, useCallback, useContext } from "react";
 import { SettingsContext } from "utils/contexts/settings";
+import { highlightProps } from "utils/widgets/highlight-rules";
 
 import Error from "./error";
 
@@ -8,8 +9,11 @@ const ALIASED_WIDGETS = {
   hoarder: "karakeep",
 };
 
+export const HighlightContext = createContext();
+
 export default function Container({ error = false, children, service }) {
   const { settings } = useContext(SettingsContext);
+  const highlightRules = service?.widget?.highlight_rules;
 
   if (error) {
     if (settings.hideErrors || service.widget.hide_errors) {
@@ -52,5 +56,12 @@ export default function Container({ error = false, children, service }) {
     );
   }
 
-  return <div className="relative flex flex-row w-full service-container">{visibleChildren}</div>;
+  const highlightFn = useCallback((field, value) => highlightProps(highlightRules, field, value), []);
+
+  // Wrapping child in a context to avoid prop drilling
+  return (
+    <HighlightContext.Provider value={highlightFn}>
+      <div className="relative flex flex-row w-full service-container">{visibleChildren}</div>
+    </HighlightContext.Provider>
+  );
 }

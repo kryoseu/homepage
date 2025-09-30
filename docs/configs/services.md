@@ -118,6 +118,45 @@ Each widget can optionally provide a list of which fields should be visible via 
       key: apikeyapikeyapikeyapikeyapikey
 ```
 
+#### Widget Highlight Rules
+
+You can optionally define **highlight rules** for each service widget. These rules allow you to highlight fields based on certain conditions.
+
+Each rule has the following properties:
+
+| Property    | Description                                                              |
+| ----------- | ------------------------------------------------------------------------ |
+| `field`     | The widget field to monitor (e.g., `alertstriggered`).                   |
+| `value`     | The value to compare against.                                            |
+| `format`    | The type of the value: `number`, `percent`, or `text`.                   |
+| `operator`  | Comparison operator: `equals`, `notEquals`, `greaterThan`, `lesserThan`. |
+| `color`     | Tailwind color: `red-500`, `yellow-500` or `green-500`                   |
+| `animation` | Animation style: `ping` or `bounce`.                                     |
+
+Example:
+
+```yaml
+- Grafana:
+    href: http://grafana.host.or.ip:port
+    icon: grafana.svg
+    widget:
+      type: grafana
+      url: http://grafana.host.or.ip:port
+      highlightRules:
+        - field: "alertstriggered"
+          value: 0
+          format: number
+          operator: equals
+          color: green-500
+          animation: ping
+        - field: "alertstriggered"
+          value: 0
+          format: number
+          operator: greaterThan
+          color: red-500 # optional, defaults to red-500
+          animation: ping # optional, defaults to ping
+```
+
 ## Descriptions
 
 Services may have descriptions,
